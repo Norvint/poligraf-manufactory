@@ -45,9 +45,9 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'working_centers',
-    'users_app',
-    'sensors',
+    'app_working_centers',
+    'app_users',
+    'app_sensors',
 ]
 
 
@@ -138,8 +138,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/users/account/'
+LOGIN_REDIRECT_URL = '/auth/account/'
 
-LOGIN_URL = '/users/login/'
+LOGIN_URL = '/auth/login/'
 
-LOGOUT_REDIRECT_URL = '/users/login/'
+LOGOUT_REDIRECT_URL = '/auth/login/'

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from working_centers.models import WorkingCenter, WorkingCenterNode
+from app_working_centers.models import WorkingCenter, WorkingCenterNode
 
 
 class WorkingCenterNodesInLine(admin.TabularInline):

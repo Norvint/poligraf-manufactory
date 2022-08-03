@@ -1,6 +1,6 @@
 from django.db import models
 
-from working_centers.models import WorkingCenterNode
+from app_working_centers.models import WorkingCenterNode
 
 
 class TypeOfSensor(models.Model):

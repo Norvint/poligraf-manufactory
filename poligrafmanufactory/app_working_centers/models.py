@@ -5,7 +5,7 @@ from django.db import models
 
 class WorkingCenter(models.Model):
     title = models.CharField('Название', max_length=100)
-    image = models.ImageField('Изображение', upload_to=os.path.join('working_centers', 'work_centers'))
+    image = models.ImageField('Изображение', upload_to=os.path.join('app_working_centers', 'work_centers'))
 
     class Meta:
         verbose_name = 'Рабочий центр'
@@ -18,7 +18,7 @@ class WorkingCenter(models.Model):
 class WorkingCenterNode(models.Model):
     title = models.CharField('Название', max_length=100)
     image = models.ImageField('Изображение', null=True, blank=True,
-                              upload_to=os.path.join('working_centers', 'nodes'))
+                              upload_to=os.path.join('app_working_centers', 'nodes'))
     work_center = models.ForeignKey(WorkingCenter, on_delete=models.CASCADE, verbose_name='Рабочий центр')
 
     class Meta:
