@@ -5,7 +5,8 @@ from django.db import models
 
 class WorkingCenter(models.Model):
     title = models.CharField('Название', max_length=100)
-    image = models.ImageField('Изображение', upload_to=os.path.join('app_working_centers', 'work_centers'))
+    image = models.ImageField('Изображение', upload_to=os.path.join('app_working_centers', 'work_centers'),
+                              blank=True, null=True)
 
     class Meta:
         verbose_name = 'Рабочий центр'

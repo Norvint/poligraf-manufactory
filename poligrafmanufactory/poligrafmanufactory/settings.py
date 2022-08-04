@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'app_working_centers',
     'app_users',
-    'app_sensors',
+    'app_devices',
 ]
 
 

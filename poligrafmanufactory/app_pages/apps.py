@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 
 
-class SensorsConfig(AppConfig):
+class AppPagesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app_sensors'
-    verbose_name = 'Датчики'
+    name = 'app_pages'
