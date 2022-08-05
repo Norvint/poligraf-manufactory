@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Список устройств{% endblock %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        {% for device in devices %}
+
+        <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{ device.title }}</div>
+            <div class="card-body">
+                <h5 class="card-title">Номер в базе: {{ device.pk }}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-bg-dark">Адрес: {{ device.address }}</li>
+                    <li class="list-group-item text-bg-dark">Тип устройства: {{ device.type_of_device }}</li>
+                    <li class="list-group-item text-bg-dark">Узел рабочего центра: {{ device.node_of_work_center }}</li>
+                </ul>
+                <a class="btn btn-outline-light col" href="#">
+                    Открыть
+                </a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
