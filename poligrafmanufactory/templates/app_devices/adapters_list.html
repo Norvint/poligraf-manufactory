@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for adapter in adapters %}
     <div class="col">
-        {% for adapter in adapters %}
 
         <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
             <div class="card-header">{{ adapter.title }}</div>
@@ -15,11 +15,19 @@
                     <li class="list-group-item text-bg-dark">Адрес: {{ adapter.address }}</li>
                     <li class="list-group-item text-bg-dark">Порт: {{ adapter.port }}</li>
                     <li class="list-group-item text-bg-dark">Тип: {{ adapter.type }}</li>
+                    <li class="list-group-item text-bg-dark">
+                        Статус:
+                        {% if adapter.status %}
+                        Доступен
+                        {% else %}
+                        Недоступен
+                        {% endif %}
+                    </li>
                 </ul>
             </div>
         </div>
 
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
