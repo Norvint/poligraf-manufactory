@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="card text-bg-dark mb-2">
+    <div class="card-body">
+        <h5 class="card-title">{{ object.title }}</h5>
+        <p class="card-text">Номер в базе: {{ object.pk }}</p>
+    </div>
+    <div class="row p-3">
+        <ul class="col list-group list-group-flush">
+            <li class="list-group-item text-bg-dark">Адрес: {{ object.address }}</li>
+            <li class="list-group-item text-bg-dark">Порт: {{ object.port }}</li>
+            <li class="list-group-item text-bg-dark">Тип адаптера: {{ object.type }}</li>
+            <li class="list-group-item text-bg-dark">Стоповый бит: {{ object.stopbits }}</li>
+            <li class="list-group-item text-bg-dark">Скорость обмена: {{ object.baudrate }}</li>
+            <li class="list-group-item text-bg-dark">Размер байта данных: {{ object.bytesize }}</li>
+        </ul>
+        <ul class="col list-group list-group-flush">
+            <li class="list-group-item text-bg-dark">Подключенные устройства:</li>
+            {% for device in conected_devices %}
+            <li class="list-group-item text-bg-dark">
+              <a class="text-reset" href="{% url 'device_detail' device.pk %}">{{ device.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

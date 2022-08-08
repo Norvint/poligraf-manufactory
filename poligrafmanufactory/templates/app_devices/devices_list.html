@@ -16,13 +16,11 @@
                     <li class="list-group-item text-bg-dark">Тип устройства: {{ device.type_of_device }}</li>
                     <li class="list-group-item text-bg-dark">Узел рабочего центра: {{ device.node_of_work_center }}</li>
                 </ul>
-                <a class="btn btn-outline-light col" href="#">
+                <a class="btn btn-outline-light col" href="{% url 'device_detail' device.pk %}">
                     Открыть
                 </a>
             </div>
-
         </div>
-
         {% endfor %}
     </div>
 </div>
