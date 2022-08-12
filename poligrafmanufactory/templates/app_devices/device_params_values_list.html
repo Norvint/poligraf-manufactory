@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Значения параметров{% endblock %}
+
+{% block content %}
+
+<div class="card text-bg-dark text-align-center">
+    <div class="card-body">
+        <h5 class="card-title">Считанные параметры устройства {{ object.title }}</h5>
+        <a href="{% url 'device_parameters_values_read' object.pk %}" class="btn btn-outline-light">Считать</a>
+    </div>
+    {% if device_parameters_values.has_other_pages %}
+    <ul class="pagination d-flex justify-content-center">
+        {% if device_parameters_values.has_previous %}
+        <li><a href="?page={{ device_parameters_values.previous_page_number }}" class="btn btn-outline-light">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span class="btn btn-outline-secondary disabled">&laquo;</span></li>
+        {% endif %}
+        {% for i in device_parameters_values.paginator.page_range %}
+        {% if device_parameters_values.number == i %}
+        <li class="active"><span class="btn btn-outline-light">{{ i }} <span class="sr-only">(текущ.)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}" class="btn btn-outline-light">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if device_parameters_values.has_next %}
+        <li><a href="?page={{ device_parameters_values.next_page_number }}" class="btn btn-outline-light">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span class="btn btn-outline-secondary disabled">&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item text-bg-dark">
+            <div class="row">
+                <div class="col">Параметр</div>
+                <div class="col">Адрес</div>
+                <div class="col">Дата</div>
+                <div class="col">Значение</div>
+                <div class="col">Тип</div>
+                <div class="col">Формат</div>
+            </div>
+        </li>
+
+        {% for device_parameter_value in device_parameters_values %}
+        <li class="list-group-item text-bg-dark">
+            <div class="row">
+                <div class="col">{{ device_parameter_value.parameter }}</div>
+                <div class="col">{{ device_parameter_value.parameter.address }}</div>
+                <div class="col">{{ device_parameter_value.date }}</div>
+                <div class="col">{{ device_parameter_value.value }}</div>
+                <div class="col">{{ device_parameter_value.parameter.parameter_type }}</div>
+                <div class="col">{{ device_parameter_value.parameter.format }}</div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="card-body">
+        <a href="{% url 'device_detail' object.pk %}" class="btn btn-outline-light">Устройство</a>
+        <a href="{% url 'device_parameters_list' object.pk %}" class="btn btn-outline-light">
+            Параметры
+        </a>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -48,6 +48,7 @@ INSTALLED_APPS += [
     'app_working_centers',
     'app_users',
     'app_devices',
+    'celery',
 ]
 
 
@@ -89,8 +90,12 @@ WSGI_APPLICATION = 'poligrafmanufactory.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASS"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
     }
 }
 
@@ -119,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -143,3 +148,8 @@ LOGIN_REDIRECT_URL = '/auth/account/'
 LOGIN_URL = '/auth/login/'
 
 LOGOUT_REDIRECT_URL = '/auth/login/'
+
+
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:7777"
+CELERY_RESULT_BACKEND = "redis://localhost:7777"

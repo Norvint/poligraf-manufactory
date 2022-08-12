@@ -94,12 +94,18 @@ class DeviceParameter(models.Model):
         ('DWORD', 'DWORD'),
         ('BYTE', 'BYTE')
     ]
+    PERMISSION_CHOICES = [
+        ('read', 'read'),
+        ('write', 'write'),
+        ('read/write', 'read/write'),
+    ]
 
     title = models.CharField('Название', max_length=200)
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Устройство')
     address = models.PositiveIntegerField('Адрес')
     parameter_type = models.ForeignKey(ParameterType, on_delete=models.CASCADE, verbose_name='Тип параметра')
     format = models.CharField('Формат данных', max_length=100, choices=DATA_FORMATS)
+    permissions = models.CharField('Доступность', max_length=100, default='read', choices=PERMISSION_CHOICES)
 
     class Meta:
         verbose_name = 'Параметр устройства'
