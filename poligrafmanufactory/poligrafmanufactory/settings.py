@@ -49,6 +49,7 @@ INSTALLED_APPS += [
     'app_users',
     'app_devices',
     'celery',
+    'django_celery_beat',
 ]
 
 
@@ -153,3 +154,6 @@ LOGOUT_REDIRECT_URL = '/auth/login/'
 # Celery settings
 CELERY_BROKER_URL = "redis://localhost:7777"
 CELERY_RESULT_BACKEND = "redis://localhost:7777"
+
+# Celery beat settings
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
