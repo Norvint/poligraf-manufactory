@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import ListView, DetailView
-from pymodbus.client.sync import ModbusTcpClient
+from pymodbus.client.tcp import ModbusTcpClient
 from pymodbus.framer.rtu_framer import ModbusRtuFramer
 
 from app_devices.models import InterfaceAdapter, Device, DeviceParameter, DeviceParameterValue

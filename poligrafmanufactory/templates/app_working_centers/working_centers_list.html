@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Список рабочих центров{% endblock %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        {% for working_center in working_centers %}
+
+        <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{ working_center.title }}</div>
+            <div class="card-body">
+                <h5 class="card-title">Номер в базе: {{ working_center.pk }}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-bg-dark">Адрес:</li>
+                </ul>
+                <a class="btn btn-outline-light col" href="{% url 'working_center_detail' working_center.pk %}">
+                    Открыть
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
