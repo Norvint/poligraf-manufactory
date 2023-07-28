@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'app_users',
     'app_crm',
+    'app_manufactory',
+    'rest_framework',
     'celery',
     'django_celery_beat',
 ]

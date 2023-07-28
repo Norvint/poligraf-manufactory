@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from app_manufactory.models import WorkCenter
+
+
+@admin.register(WorkCenter)
+class WorkCenterAdmin(admin.ModelAdmin):
+    pass
