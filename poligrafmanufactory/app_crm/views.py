@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAdminUser
 
-from app_crm.models import Order
-from app_crm.serializers import OrderSerializer
+from app_crm.models import Order, Counterparty
+from app_crm.serializers import OrderSerializer, CounterpartySerializer
 
 
 class OrderListApi(ListCreateAPIView):
@@ -12,4 +12,13 @@ class OrderListApi(ListCreateAPIView):
     """
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    permission_classes = [IsAdminUser]
+
+
+class CounterpartyListApi(ListCreateAPIView):
+    """
+    List all counterparties, or crate a new one
+    """
+    queryset = Counterparty.objects.all()
+    serializer_class = CounterpartySerializer
     permission_classes = [IsAdminUser]

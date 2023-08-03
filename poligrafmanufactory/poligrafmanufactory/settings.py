@@ -48,6 +48,7 @@ INSTALLED_APPS += [
     'app_users',
     'app_crm',
     'app_manufactory',
+    'app_warehouse',
     'rest_framework',
     'celery',
     'django_celery_beat',

@@ -1,9 +1,11 @@
 from rest_framework import serializers, fields
+from rest_framework.validators import UniqueValidator, UniqueForYearValidator
 
 from app_crm.models import Counterparty, Order
 
 
 class CounterpartySerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = Counterparty
         fields = ['title', 'is_client', 'is_provider']
@@ -11,20 +13,29 @@ class CounterpartySerializer(serializers.HyperlinkedModelSerializer):
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
     date = fields.DateTimeField(input_formats=['%d.%m.%Y %H:%M:%S'])
-    client = fields.CharField()
+    client = CounterpartySerializer()
 
     class Meta:
         model = Order
         fields = ['number', 'date', 'client']
+        validators = [
+            UniqueForYearValidator(
+                queryset=Order.objects.all(),
+                field='number',
+                date_field='date'
+            )
+        ]
 
     def create(self, validated_data):
-        client, client_created = Counterparty.objects.get_or_create(title=validated_data.pop('client'))
+        raw_client = validated_data.pop('client')
+        client, client_created = Counterparty.objects.get_or_create(**raw_client)
         order = Order.objects.create(**validated_data, client=client)
         return order
 
     def update(self, instance, validated_data):
+        raw_client = validated_data.pop('client')
         client, client_created = Counterparty.objects.get_or_create(
-            title=validated_data.get('client', instance.client.title))
+            title=raw_client.get('title', instance.client.title))
         instance.client = client
         instance.date = validated_data.get('date', instance.date)
         instance.number = validated_data.get('number', instance.number)

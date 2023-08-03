@@ -19,6 +19,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+        unique_together = ('number', 'date')
 
     def __str__(self):
         return f'Заказ №{self.number} от {self.date}'

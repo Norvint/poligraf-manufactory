@@ -24,6 +24,7 @@ urlpatterns = [
     path('auth/', include('app_users.urls')),
     path('manufactory/', include('app_manufactory.urls')),
     path('crm/', include('app_crm.urls')),
+    path('warehouse/', include('app_warehouse.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
