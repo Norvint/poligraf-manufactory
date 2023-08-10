@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>{% block title %}Главная страница{% endblock %}</title>
     {% include 'includes.html' %}
+    {% load static %}
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="{% url 'main_page' %}">Главная</a>
-                        <a class="nav-link" href="#">Рабочие центры</a>
-                        <a class="nav-link" href="#">Задания</a>
-                        <a class="nav-link" href="{% url 'admin:index' %}">Админ</a>
-                    </div>
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="{% url 'main_page' %}">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'admin:index' %}">Админ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Склад
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="{% url 'shipment_list' %}">Отгрузки</a></li>
+                            <li><a class="dropdown-item" href="#">Приемки</a></li>
+<!--                            <li><hr class="dropdown-divider"></li>-->
+<!--                            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                          </ul>
+                        </li>
+                      </ul>
                 </div>
             </div>
         </nav>

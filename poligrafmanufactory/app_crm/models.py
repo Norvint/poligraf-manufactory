@@ -10,6 +10,9 @@ class Counterparty(models.Model):
         verbose_name = 'Контрагент'
         verbose_name_plural = 'Контрагенты'
 
+    def __str__(self):
+        return self.title
+
 
 class Order(models.Model):
     number = models.CharField('Номер', max_length=20)

@@ -42,3 +42,4 @@ wcwidth==0.2.6
 wrapt==1.15.0
 zope.interface==6.0
 djangorestframework~=3.14.0
+django-filter~=23.2

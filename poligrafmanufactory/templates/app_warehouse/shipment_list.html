@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Отгрузки{% endblock %}
+{% load static %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+{% if object_list.has_other_pages %}
+<ul class="pagination">
+    {% if object_list.has_previous %}
+    {% if object_list.number > 3 %}
+    <li>
+        <a class="page-btn" href="?page=1">1</a>
+    </li>
+    {% if object_list.number > 4 %}
+    <li style="padding-top: 11px; color: #808080;  margin-right: 7px;"><span>...</span></li>
+
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
+    {% for i in object_list.paginator.page_range %}
+    {% if object_list.number == i %}
+    <li><p class="page-btn btn-red">{{ i }}</p></li>
+    {% elif object_list.number <= i|add:2 and object_list.number >= i|add:-2 %}
+    <li><a class="page-btn" href="?page={{ i }}">{{ i }}</a></li>
+    {% else %}
+    {% endif %}
+    {% endfor %}
+
+    {% if object_list.has_next %}
+    {% if object_list.number < object_list.paginator.num_pages|add:'-3' %}
+    <li style="padding-top: 11px; color: #808080;  margin-right: 7px;">
+        <span>...</span>
+    </li>
+
+    <li>
+        <a class="page-btn" href="?page={{ object_list.paginator.num_pages }}">{{ object_list.paginator.num_pages }}</a>
+    </li>
+    {% elif object_list.number < object_list.paginator.num_pages|add:'-2' %}
+    <li class="page-btn">
+        <a href="?page={{ object_list.paginator.num_pages }}">{{ object_list.paginator.num_pages }}</a>
+    </li>
+    {% endif %}
+    <li style="padding-top: 8px;">
+        <a href="?page={{ object_list.next_page_number }}">
+            <svg class="arrow-img" width="49" height="16" viewBox="0 0 49 16" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M48.7071 8.70711C49.0976 8.31658 49.0976 7.68342 48.7071 7.29289L42.3431 0.928932C41.9526 0.538408 41.3195 0.538408 40.9289 0.928932C40.5384 1.31946 40.5384 1.95262 40.9289 2.34315L46.5858 8L40.9289 13.6569C40.5384 14.0474 40.5384 14.6805 40.9289 15.0711C41.3195 15.4616 41.9526 15.4616 42.3431 15.0711L48.7071 8.70711ZM0 9H48V7H0V9Z"
+                      fill="#808080"/>
+            </svg>
+        </a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+
+
+<table class="table table-dark table-bordered" id="shipmentsTable">
+    <thead>
+    <tr>
+        <td class="bg-gradient fw-bold">Документ</td>
+        <td class="bg-gradient fw-bold">Номер</td>
+        <td class="bg-gradient fw-bold">Дата оформления</td>
+        <td class="bg-gradient fw-bold">Плановая дата отгрузки</td>
+        <td class="bg-gradient fw-bold">Заказ</td>
+        <td class="bg-gradient fw-bold">Готовность заказа</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for shipment in object_list %}
+    <tr class="">
+        <td>{{ shipment.name }}</td>
+        <td>{{ shipment.number }}</td>
+        <td>{{ shipment.date }}</td>
+        <td>{{ shipment.planned_date }}</td>
+        <td>{{ shipment.order }}</td>
+        <td class="">
+            {% if shipment.order_is_ready %}
+            Готов
+            {% else %}
+            Не готов
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script src="{% static 'js/scripts.js' %}">
+var month = new Array();
+month[0] = "Января";
+month[1] = "Февраля";
+month[2] = "Марта";
+month[3] = "Апреля";
+month[4] = "Мая";
+month[5] = "Июня";
+month[6] = "Июля";
+month[7] = "Августа";
+month[8] = "Сентября";
+month[9] = "Октября";
+month[10] = "Ноября";
+month[11] = "Декабря";
+
+function updateTable() {
+    var data = {page: {{ object_list.number }}}
+    var tbodyRef = document.getElementById('shipmentsTable').getElementsByTagName('tbody')[0];
+    var new_tbody = document.createElement('tbody');
+    tbodyRef.parentNode.replaceChild(new_tbody, tbodyRef)
+
+    // Append a text node to the cell
+    //   var newText = document.createTextNode('new row');
+    //   newCell.appendChild(newText);
+   $.ajax({
+       type: 'GET',
+       data: data,
+       url: '/warehouse/api/shipments/',
+       success: function(res){
+         for (const i in res.results) {
+              var newRow = new_tbody.insertRow();
+              var nameCell = newRow.insertCell();
+              nameCell.innerHTML += res.results[i].name;
+              var numberCell = newRow.insertCell();
+              numberCell.innerHTML += res.results[i].number;
+              var dateCell = newRow.insertCell();
+              date = new Date(res.results[i].date);
+              dateCell.innerHTML += date;
+              var pannedDateCell = newRow.insertCell();
+              var plannedDate = new Date(res.results[i].planned_date);
+              var plannedDateString = `${plannedDate.getDate()} ${month[plannedDate.getMonth()]} ${plannedDate.getFullYear()}`
+              pannedDateCell.innerHTML += plannedDateString;
+              var orderCell = newRow.insertCell();
+              orderCell.innerHTML += "Заказ №" + res.results[i].order.number;
+              var orderReadyCell = newRow.insertCell();
+              if (res.results[i].order_is_ready) {
+                 orderReadyCell.innerHTML += "Готов"
+                 }
+              else
+              {   orderReadyCell.innerHTML += "Не готов" };
+
+         };
+       },
+       error: function(error) {
+           callbackErr(error,self)
+       }
+   })
+}
+setInterval(updateTable, 10000);
+</script>
+
+
+{% endblock %}
